@@ -35,6 +35,7 @@ Example:
 
 ```json
 {"token": ["Paris (French pronunciation: \u200b[pa\u0281i] (listen)) is the capital and most populous city of France [...] the Tour de France bicycle race finishes on the Avenue des Champs-\u00c9lys\u00e9es in Paris."], "label": ["Geography", "Cities", "Europe (Cities)", "Western Europe (Europe (Cities))", "France (Western Europe) (Western Europe (Europe (Cities)))"]}
+```
 
 In addition a taxonomy file must me added which must match the hwv.taxonomy namely a txt file which have the following properties :
 - each line represent a parent followed by all its children 
@@ -46,7 +47,7 @@ Example :
 
 ```txt
 Root	Technology	Society and social sciences	Arts	Philosophy and religion	Biological and health sciences	Physical sciences	Everyday life	Mathematics (Root)	Geography	History	People
-
+```
 
 ### Tokenization 
 
