@@ -39,6 +39,7 @@ city of France [...] the Tour de France bicycle race finishes on the Avenue des 
 \u00e9es in Paris."], 
 "label": ["Geography", "Cities", "Europe (Cities)", "Western Europe (Europe (Cities))", "France 
 (Western Europe) (Western Europe (Europe (Cities)))"]}
+
 ```
 
 In addition a taxonomy file must me added which must match the hwv.taxonomy namely a txt file which have the following properties :
