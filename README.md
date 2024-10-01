@@ -34,11 +34,18 @@ In any case the must exactlty match the format of data/hwv_train.json namely eac
 Example: 
 
 ```json
-{"token": ["Paris (French pronunciation: \u200b[pa\u0281i] (listen)) is the capital and most populous 
-city of France [...] the Tour de France bicycle race finishes on the Avenue des Champs-\u00c9lys
-\u00e9es in Paris."], 
-"label": ["Geography", "Cities", "Europe (Cities)", "Western Europe (Europe (Cities))", "France 
-(Western Europe) (Western Europe (Europe (Cities)))"]}
+{
+  "token": [
+    "Paris (French pronunciation: \u200b[pa\u0281i] (listen)) is the capital and most populous city of France [...]\nThe Tour de France bicycle race finishes on the Avenue des Champs-\u00c9lys\u00e9es in Paris."
+  ],
+  "label": [
+    "Geography",
+    "Cities",
+    "Europe (Cities)",
+    "Western Europe (Europe (Cities))",
+    "France (Western Europe) (Western Europe (Europe (Cities)))"
+  ]
+}
 
 ```
 
