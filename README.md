@@ -32,6 +32,8 @@ See the article for full details.
 
 ### A fair methodology of evaluation
 
+We propose to quantitatively evaluate HTC methods based on specifically designed hierarchical metrics and with a rigorous methodology.
+
 ## Code implementation
 
 ### Installation
@@ -47,11 +49,11 @@ See the article for full details.
     conda activate revisiting_htc_env
     ```
 
-#### Dataset Preparation
+### Dataset Preparation
 
 Our newly introduced dataset is available [here](data/HWV). Feel free to use it for your experiments. This dataset is released under the MIT License.
 
-##### Datasets
+#### Datasets
 Obtain the RCV1, WOS, and BGC datasets by referring to:
 - [HiTIN repo for RCV1 and WOS](https://github.com/Rooooyy/HiTIN/tree/master)
 - [BGC dataset from this repo](https://gitlab.com/distration/dsi-nlp-publib/-/blob/main/htc-survey-22/src/dataset_tools/blurb/)
@@ -74,26 +76,31 @@ Root	Science	Technology	Arts
 Science	Physics	Chemistry	Biology
 ```
 
-##### Tokenization 
+#### Tokenization 
 
-For a faster running training you can tokenize your dataset. Here is how you should do with hwv dataset.
+To accelerate the training process, you can tokenize your dataset. Below are the instructions for tokenizing the HWV dataset:
 
 ```shell
 python3 tokenize_dataset.py --data_train_path data/HWV/hwv_train.json --data_test_path data/HWV/hwv_test.json --data_valid_path data/HWV/hwv_val.json --config_file data/HWV/config_hwv.json
 ```
 
 
-##### Train
+### Train
 
-To reproduce the results of our article : 
+To reproduce the results of our article, execute the following command:
+
 
 ```shell
 bash bash_files/hwv/train_hwv_hitin_cond_softmax_la.sh
 ```
 
-(or any other bash file contained in the folder bash_files)
+You may also use any other bash file contained in the bash_files folder.
 
-NB: if you dataset is not tokenized please set "tokenized" to false in the config file and change the names of the paths to dataset
+
+**Note**: If your dataset is not tokenized, please set "tokenized" to false in the config file and update the paths to the dataset accordingly.
+
+
+### Evaluation
 
 
 
