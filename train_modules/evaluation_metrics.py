@@ -2,7 +2,7 @@
 # coding:utf-8
 
 import numpy as np
-from sklearn.metrics import accuracy_score, f1_score, confusion_matrix, precision_score, recall_score
+from sklearn.metrics import accuracy_score, f1_score, confusion_matrix, precision_score, recall_score, auc
 from helper.utils import get_hierarchy_relations, preprocess_predictions
 import os
 import torch
@@ -347,3 +347,40 @@ def evaluate_very_fast(probs, labels, vocab, depth_max):
     metrics['macro']['f1_score'] = f1
 
     return metrics
+
+def compute_curve_hf1(probs, labels):
+
+    precisions = []
+    recalls = []
+    for idx, (prob, label) in enumerate(zip(probs, labels)):
+        y_true = (label==1)
+        y_pred = np.zeros(len(label))
+        taus = np.concatenate([np.unique(prob)[::-1], [0]])
+        hf1 = [(precision_score([y_true], [y_pred], average='samples', zero_division=1), recall_score([y_true], [y_pred], average='samples'))]
+        recall = hf1[-1][1]
+        tp = 0
+        last = True
+        i = 0
+        while recall < 1 - 10e-9:
+            tau = taus[i]
+            y_pred = prob >= tau
+            new_tp = len(set(np.where(y_true==1)[0]).intersection(set(np.where(y_pred==1)[0])))
+            if new_tp > tp and i>0:
+                tp = new_tp
+                if not last:
+                    p, r = precision_score([y_true], [prob >= taus[i-1]], average='samples', zero_division=1), recall_score([y_true], [prob >= taus[i-1]], average='samples')
+                    hf1.append((p, r))
+                p, r = precision_score([y_true], [y_pred], average='samples', zero_division=1), recall_score([y_true], [y_pred], average='samples')
+                hf1.append((p, r))
+                recall = r
+                last = True
+            else:
+                last = False
+            i += 1
+        precisions.append([p for p, r in hf1])
+        recalls.append([r for p, r in hf1])
+
+    aucs = [auc(r, p) for p, r in zip(precisions, recalls)]
+
+
+    return np.mean(aucs)

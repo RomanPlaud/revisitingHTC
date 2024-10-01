@@ -273,55 +273,55 @@ def train(config, args):
         print("[Val] epoch: %d micro_f1: %.4f\t macro_f1_depth_max: %.4f" \
                     % (epoch, performance['micro']['standard']['f1_score'], performance['macro']['standard'][max_depth]['f1_score']))
         # saving best model and check model
-        # if not (performance['micro']['standard']['f1_score'] >= best_performance[0] or performance['macro']['standard'][max_depth]['f1_score'] >= best_performance[1]):
-        #     wait += 1
-        #     # reduce LR on plateau
-        #     if wait % config.train.optimizer.lr_patience == 0:
-        #         logger.warning("Performance has not been improved for {} epochs, updating learning rate".format(wait))
-        #         trainer.update_lr()
-        #     # early stopping
-        #     if wait == config.train.optimizer.early_stopping:
-        #         logger.warning("Performance has not been improved for {} epochs, stopping train with early stopping"
-        #                        .format(wait))
-        #         break
+        if not (performance['micro']['standard']['f1_score'] >= best_performance[0] or performance['macro']['standard'][max_depth]['f1_score'] >= best_performance[1]):
+            wait += 1
+            # reduce LR on plateau
+            if wait % config.train.optimizer.lr_patience == 0:
+                logger.warning("Performance has not been improved for {} epochs, updating learning rate".format(wait))
+                trainer.update_lr()
+            # early stopping
+            if wait == config.train.optimizer.early_stopping:
+                logger.warning("Performance has not been improved for {} epochs, stopping train with early stopping"
+                               .format(wait))
+                break
 
-        # if performance['micro']['standard']['f1_score'] > best_performance[0]:
-        #     wait = 0
-        #     logger.info('Improve Micro-F1 {}% --> {}%'.format(best_performance[0], performance['micro']['standard']['f1_score']))
-        #     best_performance[0] = performance['micro']['standard']['f1_score']
-        #     best_epoch[0] = epoch
-        #     save_checkpoint({
-        #         'epoch': epoch,
-        #         'model_type': config.model.type,
-        #         'state_dict': model.state_dict(),
-        #         'best_performance': best_performance,
-        #         'optimizer': optimizer.state_dict()
-        #     }, os.path.join(model_checkpoint, 'best_micro_' + model_name))
-        # if performance['macro']['standard'][max_depth]['f1_score'] > best_performance[1]:
-        #     wait = 0
-        #     logger.info('Improve Macro-F1-max-depth {}% --> {}%'.format(best_performance[1], performance['macro']['standard'][max_depth]['f1_score']))
-        #     best_performance[1] = performance['macro']['standard'][max_depth]['f1_score']
-        #     best_epoch[1] = epoch
-        #     save_checkpoint({
-        #         'epoch': epoch,
-        #         'model_type': config.model.type,
-        #         'state_dict': model.state_dict(),
-        #         'best_performance': best_performance,
-        #         'optimizer': optimizer.state_dict()
-        #     }, os.path.join(model_checkpoint, 'best_macro_max_depth' + model_name))
-        # Save the model based on the lowest total_loss
-        if total_loss < best_loss:
+        if performance['micro']['standard']['f1_score'] > best_performance[0]:
             wait = 0
-            logger.info('Total loss improved from {:.4f} to {:.4f}'.format(best_loss, total_loss))
-            best_loss = total_loss
-            best_epoch = epoch
+            logger.info('Improve Micro-F1 {}% --> {}%'.format(best_performance[0], performance['micro']['standard']['f1_score']))
+            best_performance[0] = performance['micro']['standard']['f1_score']
+            best_epoch[0] = epoch
             save_checkpoint({
                 'epoch': epoch,
                 'model_type': config.model.type,
                 'state_dict': model.state_dict(),
-                'best_loss': best_loss,
+                'best_performance': best_performance,
                 'optimizer': optimizer.state_dict()
-            }, os.path.join(model_checkpoint, 'best_loss_' + model_name))
+            }, os.path.join(model_checkpoint, 'best_micro_' + model_name))
+        if performance['macro']['standard'][max_depth]['f1_score'] > best_performance[1]:
+            wait = 0
+            logger.info('Improve Macro-F1-max-depth {}% --> {}%'.format(best_performance[1], performance['macro']['standard'][max_depth]['f1_score']))
+            best_performance[1] = performance['macro']['standard'][max_depth]['f1_score']
+            best_epoch[1] = epoch
+            save_checkpoint({
+                'epoch': epoch,
+                'model_type': config.model.type,
+                'state_dict': model.state_dict(),
+                'best_performance': best_performance,
+                'optimizer': optimizer.state_dict()
+            }, os.path.join(model_checkpoint, 'best_macro_max_depth' + model_name))
+        # Save the model based on the lowest total_loss
+        # if total_loss < best_loss:
+        #     wait = 0
+        #     logger.info('Total loss improved from {:.4f} to {:.4f}'.format(best_loss, total_loss))
+        #     best_loss = total_loss
+        #     best_epoch = epoch
+        #     save_checkpoint({
+        #         'epoch': epoch,
+        #         'model_type': config.model.type,
+        #         'state_dict': model.state_dict(),
+        #         'best_loss': best_loss,
+        #         'optimizer': optimizer.state_dict()
+        #     }, os.path.join(model_checkpoint, 'best_loss_' + model_name))
         else:
             wait += 1
             # Reduce LR on plateau
@@ -354,15 +354,15 @@ def train(config, args):
                         config=config,
                         optimizer=optimizer)
         # start_time = time.time()
-        # performance = trainer.eval(test_loader, best_epoch[0], 'TEST')
-        predict_probs, labels, logits_all, _ = trainer.inference(test_loader, best_epoch, 'TEST')
+        performance, _= trainer.eval(test_loader, best_epoch[0], 'TEST')
+        # predict_probs, labels, logits_all, _ = trainer.inference(test_loader, best_epoch, 'TEST')
 
-        path = "predictions_runs/" + str(config.data.dataset) + '/' + str(config.data.name)
+        # path = "predictions_runs/" + str(config.data.dataset) + '/' + str(config.data.name)
 
-        pickle.dump(predict_probs, open(path + '/prob.pickle', "wb"))
-        pickle.dump(logits_all, open(path + '/logits.pickle', "wb"))
-        pickle.dump(labels, open(path + '/labels.pickle', "wb"))
-        print('passed test')
+        # pickle.dump(predict_probs, open(path + '/prob.pickle', "wb"))
+        # pickle.dump(logits_all, open(path + '/logits.pickle', "wb"))
+        # pickle.dump(labels, open(path + '/labels.pickle', "wb"))
+        # print('passed test')
 
         # print("Inference time A : {} secs.".format(time.time() - start_time))
         # record best micro test performance
