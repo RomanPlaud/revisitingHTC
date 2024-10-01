@@ -12,6 +12,8 @@ conda create -n revisiting_htc_env --file revisiting-htc.txt
 
 ## Data preparation
 
+test
+
 ### Datasets
 
 Please manage to acquire the original datasets refer to recent implementations to obtain WOS, RCV1 and BGC. 
