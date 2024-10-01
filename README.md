@@ -6,9 +6,23 @@ Based on [HITIN repo](https://github.com/Rooooyy/HiTIN).
 
 ## Abstract
 
-Hierarchical Text Classification (HTC) assigns labels to text in a structured hierarchical space. Recent approaches treat it as multilabel classification without considering hierarchical relationships. We propose specialized hierarchical metrics and novel inference methods. A new challenging dataset is introduced to fairly compare sophisticated models and competitive baselines, with a focus on evaluation methodology.
+Hierarchical text classification (HTC) is the task of assigning labels to a text within a structured space organized as a hierarchy. Recent works
+treat HTC as a conventional multilabel classification problem, therefore evaluating it as such.
+We instead propose to evaluate models based on specifically designed hierarchical metrics and we demonstrate the intricacy of metric choice and prediction inference method.  We introduce a new challenging dataset and we evaluate fairly, recent sophisticated models, comparing them with a range of simple but strong baselines, including a new theoretically motivated loss. Finally, we show that those baselines are very often competitive with the latest models. This highlights the importance of carefully considering the evaluation methodology when proposing new methods for HTC.
 
-## Installation
+## Key features
+
+### Hierarchical Wikivitals : a new challenging dataset
+
+![aa](figures/example_hwv.png)
+
+### Logit adjusted softmax cross-entropy
+
+### A fair methodology of evaluation
+
+## Code implementation
+
+### Installation
 
 1. Clone the repository:
     ```bash
@@ -21,9 +35,11 @@ Hierarchical Text Classification (HTC) assigns labels to text in a structured hi
     conda activate revisiting_htc_env
     ```
 
-## Dataset Preparation
+#### Dataset Preparation
 
-### Datasets
+Our newly introduced dataset is available [here](data/HWV). Feel free to use it for your experiments. This dataset is released under the MIT License.
+
+##### Datasets
 Obtain the RCV1, WOS, and BGC datasets by referring to:
 - [HiTIN repo for RCV1 and WOS](https://github.com/Rooooyy/HiTIN/tree/master)
 - [BGC dataset from this repo](https://gitlab.com/distration/dsi-nlp-publib/-/blob/main/htc-survey-22/src/dataset_tools/blurb/)
@@ -46,30 +62,29 @@ Root	Science	Technology	Arts
 Science	Physics	Chemistry	Biology
 ```
 
-### Tokenization 
+##### Tokenization 
 
-For a faster running training you can tokenize your dataset. Here is how you should do with hwv dataset
+For a faster running training you can tokenize your dataset. Here is how you should do with hwv dataset.
 
 ```shell
 python3 tokenize_dataset.py --data_train_path data/HWV/hwv_train.json --data_test_path data/HWV/hwv_test.json --data_valid_path data/HWV/hwv_val.json --config_file data/HWV/config_hwv.json
 ```
 
-We provide guidelines for HWV dataset (but you can easily apply it to other datasets with the same code)
 
-```shell
-bash preprocess_hwv.sh
-```
-
-
-## Train
+##### Train
 
 To reproduce the results of our article : 
 
 ```shell
-bash bash_files/train_hwv_cond_softmax_la.sh
+bash bash_files/hwv/train_hwv_hitin_cond_softmax_la.sh
 ```
 
 (or any other bash file contained in the folder bash_files)
 
 NB: if you dataset is not tokenized please set "tokenized" to false in the config file and change the names of the paths to dataset
 
+
+
+## License
+
+This project and datasets is released under the MIT License.
