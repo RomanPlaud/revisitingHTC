@@ -1,7 +1,15 @@
 # Revisiting Hierarchical Text Classification: Inference and Metrics
 
-This repository is based on [Hitin](https://github.com/Rooooyy/HiTIN)
+**This is the official implementation of [Revisiting Hierarchical Text Classification : Inference and Metrics](), CoNLL 2024.**
 
+This repository is based on [HITIN repo](https://github.com/Rooooyy/HiTIN)
+
+## Abstract 
+
+Hierarchical text classification (HTC) is the task of assigning labels to a text within a structured space organized as a hierarchy. Recent works
+treat HTC as a conventional multilabel classification problem, therefore evaluating it as such. We instead propose to evaluate models based on specifically designed hierarchical metrics and we demonstrate the intricacy of metric choice and prediction inference method.  We introduce a new challenging dataset and we 
+evaluate fairly, recent sophisticated models, comparing them with a range of simple but strong baselines, including a new theoretically motivated loss. 
+Finally, we show that those baselines are very often competitive with the latest models. This highlights the importance of carefully considering the evaluation methodology when proposing new methods for HTC.
 
 ## Requirements
 
@@ -21,12 +29,24 @@ Please manage to acquire the original datasets refer to recent implementations t
 
 In any case the must exactlty match the format of data/hwv_train.json namely each line must contain a dictionnary whose keys are :
 - 'token' containing a list in which it is the raw input text
-- 'label' containing the list of labels 
+- 'label' containing the list of labels
+
+Example: 
+
+```json
+{"token": ["Paris (French pronunciation: \u200b[pa\u0281i] (listen)) is the capital and most populous city of France [...] the Tour de France bicycle race finishes on the Avenue des Champs-\u00c9lys\u00e9es in Paris."], "label": ["Geography", "Cities", "Europe (Cities)", "Western Europe (Europe (Cities))", "France (Western Europe) (Western Europe (Europe (Cities)))"]}
 
 In addition a taxonomy file must me added which must match the hwv.taxonomy namely a txt file which have the following properties :
 - each line represent a parent followed by all its children 
 - each line is separted by '\n'
 - in each line each name is separated by '\t'
+- each element must exactly cover all labels represented in the dataset used
+
+Example : 
+
+```txt
+Root	Technology	Society and social sciences	Arts	Philosophy and religion	Biological and health sciences	Physical sciences	Everyday life	Mathematics (Root)	Geography	History	People
+
 
 ### Tokenization 
 
