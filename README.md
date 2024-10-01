@@ -22,6 +22,13 @@ We present Hierarchical Wikivitals, a novel high-quality HTC dataset, extracted 
 
 ### Logit adjusted softmax cross-entropy
 
+<p align="center">
+    \begin{equation*}
+    \hat{\mathbb{P}}(y|x, \pi(y)) = \frac{e^{s_x^{[y]} + \tau\log\nu(y|\pi(y))}}{\underset{z\in\mathcal{C}(\pi(y))}{\sum}e^{s_x^{[z]} + \tau\log\nu(z|\pi(z))}} 
+    \end{equation*}
+</p>
+
+
 ### A fair methodology of evaluation
 
 ## Code implementation
