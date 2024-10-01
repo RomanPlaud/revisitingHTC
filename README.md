@@ -1,6 +1,6 @@
 # Revisiting Hierarchical Text Classification: Inference and Metrics
 
-This repository is based on Hitin[https://github.com/Rooooyy/HiTIN]
+This repository is based on [Hitin](https://github.com/Rooooyy/HiTIN)
 
 
 ## Requirements
@@ -20,17 +20,20 @@ Please manage to acquire the original datasets refer to recent implementations t
 - For BGC follows this [repo](https://gitlab.com/distration/dsi-nlp-publib/-/blob/main/htc-survey-22/src/dataset_tools/blurb/)
 
 In any case the must exactlty match the format of data/hwv_train.json namely each line must contain a dictionnary whose keys are :
--'token' containing a list in which it is the raw input text
--'label' containing the list of labels 
+- 'token' containing a list in which it is the raw input text
+- 'label' containing the list of labels 
 
 In addition a taxonomy file must me added which must match the hwv.taxonomy namely a txt file which have the following properties :
--each line represent a parent followed by all its children 
--each line is separted by '\n'
--in each line each name is separated by '\t'
+- each line represent a parent followed by all its children 
+- each line is separted by '\n'
+- in each line each name is separated by '\t'
 
 ### Tokenization 
 
-For a faster running training you can tokenize your dataset. 
+For a faster running training you can tokenize your dataset. Here is how you should do with hwv dataset
+
+``` python3 tokenize_dataset.py --data_train_path data/HWV/hwv_train.json --data_test_path data/HWV/hwv_test.json --data_valid_path data/HWV/hwv_val.json --config_file data/HWV/config_hwv.json
+```
 
 We provide guidelines for HWV dataset (but you can easily apply it to other datasets with the same code)
 
