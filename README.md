@@ -10,9 +10,9 @@ Hierarchical text classification (HTC) is the task of assigning labels to a text
 treat HTC as a conventional multilabel classification problem, therefore evaluating it as such.
 We instead propose to evaluate models based on specifically designed hierarchical metrics and we demonstrate the intricacy of metric choice and prediction inference method.  We introduce a new challenging dataset and we evaluate fairly, recent sophisticated models, comparing them with a range of simple but strong baselines, including a new theoretically motivated loss. Finally, we show that those baselines are very often competitive with the latest models. This highlights the importance of carefully considering the evaluation methodology when proposing new methods for HTC.
 
-## Key features
+## Key features 🚀
 
-### Hierarchical Wikivitals : a new challenging dataset
+### Hierarchical Wikivitals : a new challenging dataset 📊 
 
 We present Hierarchical Wikivitals, a novel high-quality HTC dataset, extracted from Wikipedia. Equipped with a deep and complex hierarchy, it provides a harder challenge.
 
@@ -20,7 +20,7 @@ We present Hierarchical Wikivitals, a novel high-quality HTC dataset, extracted 
     <img src="figures/example_hwv.png"  width="400">
 </p>
 
-### Logit adjusted conditional softmax
+### Logit adjusted conditional softmax 🆕 
 The conditional probability is computed as follows :
 
 $$
@@ -40,7 +40,7 @@ For full details regarding the derivation and implications of these formulas, pl
 
 We quantitatively evaluate HTC methods based on specifically designed hierarchical metrics and with a rigorous methodology.
 
-## Code implementation
+## Code implementation 💻
 
 ### Installation
 
