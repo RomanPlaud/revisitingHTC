@@ -16,7 +16,7 @@ We instead propose to evaluate models based on specifically designed hierarchica
 
 We present Hierarchical Wikivitals, a novel high-quality HTC dataset, extracted from Wikipedia. Equipped with a deep and complex hierarchy, it provides a harder challenge.
 
-<img src="figures/example_hwv.png" alt="Extract of the taxonomy of our new dataset Hierarchical WikiVitals." width="500">
+<img src="figures/example_hwv.png" alt="Extract of the taxonomy of our new dataset Hierarchical WikiVitals." width="300">
 
 ### Logit adjusted softmax cross-entropy
 
