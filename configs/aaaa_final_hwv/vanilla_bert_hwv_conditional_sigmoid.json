@@ -1,0 +1,68 @@
+{
+    "data": {
+        "dataset": "hwv",
+        "data_dir": "data/HWV",
+        "train_file": "hwv_train_tokenized.json",
+        "val_file": "hwv_val_tokenized.json",
+        "test_file": "hwv_test_tokenized.json",
+        "hierarchy": "hwv.taxonomy",
+        "tokenized": true,
+        "name": "cond_sigmoid"
+        
+    },
+    "text_encoder": {
+        "type": "bert",
+        "bert_model_dir": "bert-base-uncased",
+        "max_length": 512,
+        "freeze_bert": false,
+        "topK_max_pooling": 1
+    },
+    "model": {
+        "type": "Origin",
+        "classifier": {
+            "num_layer": 2,
+            "dropout": 0.1,
+            "hidden_dimension": 792
+        }
+    },
+    "train": {
+        "optimizer": {
+            "type": "Adam",
+            "learning_rate": 2e-05,
+            "lr_decay": 1.0,
+            "lr_patience": 5,
+            "early_stopping": 50,
+            "set_to_zero_decay_classif": false
+        },
+        "batch_size": 16,
+        "start_epoch": 0,
+        "end_epoch": 20,
+        "losstype": "conditional_sigmoid",
+        "device_setting": {
+            "device": "cuda",
+            "visible_device_list": "0",
+            "num_workers": 0
+        },
+        "checkpoint": {
+            "dir": "vanilla_bert_hwv_conditional_sigmoid",
+            "max_number": 10,
+            "save_best": [
+                "Macro_F1",
+                "Micro_F1"
+            ]
+        }
+    },
+    "eval": {
+        "batch_size": 16,
+        "threshold": 0.5,
+        "type": "set"
+    },
+    "test": {
+        "best_checkpoint": "best_micro_cond_sigmoid_bert",
+        "batch_size": 4
+    },
+    "log": {
+        "level": "info",
+        "filename": "vanilla_bert_hwv_conditional_sigmoid.log"
+    }
+}
