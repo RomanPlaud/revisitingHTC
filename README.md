@@ -30,7 +30,7 @@ $$
 The loss function is computed as follows : 
 
 $$
-    l_{\mathrm{CSoft,LA}}(x, Y) = -\sum_{y \in Y}\log\hat{\mathbb{P}}(y|x, \pi(y))
+   \Huge l_{\mathrm{CSoft,LA}}(x, Y) = -\sum_{y \in Y}\log\hat{\mathbb{P}}(y|x, \pi(y))
 $$
 
 See the article for full details.
