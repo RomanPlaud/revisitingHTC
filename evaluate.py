@@ -127,9 +127,9 @@ if __name__ == "__main__":
     predict_probs, labels, _, _ = trainer.inference(test_loader, -1, 'TEST')
 
     # preprocess the prediction 
-    predict_probs = np.array(predict_probs)
-    relations = corpus_vocab.hierarchy
-    predict_probs = np.array(preprocess_predictions(predict_probs, relations))
+    # predict_probs = np.array(predict_probs)
+    # relations = corpus_vocab.hierarchy
+    # predict_probs = np.array(preprocess_predictions(predict_probs, relations))
 
     hf1_auc = compute_curve_hf1(predict_probs, labels)
     hamming_loss = hamming_loss(labels, predict_probs > 0.5)
@@ -137,7 +137,7 @@ if __name__ == "__main__":
     f1_score_macro = f1_score(labels, predict_probs > 0.5, average='macro')
     ## evaluate the model
 
-    print('HF1-AUC: ', hf1_auc)
+    # print('HF1-AUC: ', hf1_auc)
     print('Hamming Loss: ', hamming_loss)
     print('F1 Score Micro: ', f1_score_micro)
     print('F1 Score Macro: ', f1_score_macro)

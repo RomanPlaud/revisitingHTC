@@ -1,0 +1,36 @@
+2024/10/01 16:53:07 - INFO : configs/aaaa_final_hwv/vanilla_bert_hwv_conditional_softmax_la.json
+2024/10/01 16:53:07 - INFO : Processing....
+2024/10/01 16:53:07 - INFO : Generating Vocabulary from Corpus...
+2024/10/01 16:53:07 - INFO : Loading TRAIN subset...
+2024/10/01 16:53:07 - INFO : Loading VAL subset...
+2024/10/01 16:53:07 - INFO : Loading TEST subset...
+2024/10/01 17:01:36 - INFO : DEV performance at epoch 0 ---
+2024/10/01 17:01:36 - INFO : Loss: 3.8781
+2024/10/01 17:01:36 - INFO : Micro precision: 0.9014
+2024/10/01 17:01:36 - INFO : Micro recall: 0.2741
+2024/10/01 17:01:36 - INFO : Micro F1: 0.4203
+2024/10/01 17:01:36 - INFO : 
+
+2024/10/01 17:01:36 - INFO : Macro precision: 1.0000
+2024/10/01 17:01:36 - INFO : Macro recall: 0.1667
+2024/10/01 17:01:36 - INFO : Macro F1 max depth: 0.2857
+2024/10/01 17:01:36 - INFO : 
+
+2024/10/01 17:01:36 - INFO : Improve Micro-F1 0.0% --> 0.4203494347379239%
+2024/10/01 17:01:39 - INFO : Improve Macro-F1-max-depth 0.0% --> 0.2857142857142857%
+2024/10/01 17:01:42 - INFO : Epoch 0 Time Cost 512.8288860321045 secs.
+2024/10/01 17:10:09 - INFO : DEV performance at epoch 1 ---
+2024/10/01 17:10:09 - INFO : Loss: 2.4936
+2024/10/01 17:10:09 - INFO : Micro precision: 0.8941
+2024/10/01 17:10:09 - INFO : Micro recall: 0.4807
+2024/10/01 17:10:09 - INFO : Micro F1: 0.6253
+2024/10/01 17:10:09 - INFO : 
+
+2024/10/01 17:10:09 - INFO : Macro precision: 1.0000
+2024/10/01 17:10:09 - INFO : Macro recall: 0.5000
+2024/10/01 17:10:09 - INFO : Macro F1 max depth: 0.6667
+2024/10/01 17:10:09 - INFO : 
+
+2024/10/01 17:10:09 - INFO : Improve Micro-F1 0.4203494347379239% --> 0.6252723311546841%
+2024/10/01 17:10:13 - INFO : Improve Macro-F1-max-depth 0.2857142857142857% --> 0.6666666666666666%
+2024/10/01 17:10:16 - INFO : Epoch 1 Time Cost 513.9751527309418 secs.
