@@ -1,0 +1,11 @@
+{
+    "data": {
+        "dataset": "hwv",
+        "data_dir": "data/HWV",
+        "train_file": "hwv_train.json",
+        "val_file": "hwv_val.json",
+        "test_file": "hwv_test.json",
+        "hierarchy": "hwv.taxonomy"
+    }
+}
+    
