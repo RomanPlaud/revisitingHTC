@@ -1,64 +1,49 @@
 # Revisiting Hierarchical Text Classification: Inference and Metrics
 
-**This is the official implementation of [Revisiting Hierarchical Text Classification : Inference and Metrics](), CoNLL 2024.**
+**Official implementation of [Revisiting Hierarchical Text Classification: Inference and Metrics], CoNLL 2024.**
 
-This repository is based on [HITIN repo](https://github.com/Rooooyy/HiTIN)
+Based on [HITIN repo](https://github.com/Rooooyy/HiTIN).
 
-## Abstract 
+## Abstract
 
-Hierarchical text classification (HTC) is the task of assigning labels to a text within a structured space organized as a hierarchy. Recent works
-treat HTC as a conventional multilabel classification problem, therefore evaluating it as such. We instead propose to evaluate models based on specifically designed hierarchical metrics and we demonstrate the intricacy of metric choice and prediction inference method.  We introduce a new challenging dataset and we 
-evaluate fairly, recent sophisticated models, comparing them with a range of simple but strong baselines, including a new theoretically motivated loss. 
-Finally, we show that those baselines are very often competitive with the latest models. This highlights the importance of carefully considering the evaluation methodology when proposing new methods for HTC.
+Hierarchical Text Classification (HTC) assigns labels to text in a structured hierarchical space. Recent approaches treat it as multilabel classification without considering hierarchical relationships. We propose specialized hierarchical metrics and novel inference methods. A new challenging dataset is introduced to fairly compare sophisticated models and competitive baselines, with a focus on evaluation methodology.
 
-## Requirements
+## Installation
 
-Create a conda environnement as follows : 
-```shell
-conda create -n revisiting_htc_env --file revisiting-htc.txt
-```
+1. Clone the repository:
+    ```bash
+    git clone https://github.com/RomanPlaud/revisitingHTC.git
+    cd revisitingHTC
+    ```
+2. Create and activate the conda environment:
+    ```bash
+    conda create -n revisiting_htc_env --file revisiting-htc.txt
+    conda activate revisiting_htc_env
+    ```
 
-## Data preparation
-
+## Dataset Preparation
 
 ### Datasets
+Obtain the RCV1, WOS, and BGC datasets by referring to:
+- [HiTIN repo for RCV1 and WOS](https://github.com/Rooooyy/HiTIN/tree/master)
+- [BGC dataset from this repo](https://gitlab.com/distration/dsi-nlp-publib/-/blob/main/htc-survey-22/src/dataset_tools/blurb/)
 
-Please manage to acquire the original datasets refer to recent implementations to obtain WOS, RCV1 and BGC. 
-- For RCV1 and WOS, follow this [repo](https://github.com/Rooooyy/HiTIN/tree/master)  
-- For BGC follows this [repo](https://gitlab.com/distration/dsi-nlp-publib/-/blob/main/htc-survey-22/src/dataset_tools/blurb/)
-
-In any case the must exactlty match the format of data/hwv_train.json namely each line must contain a dictionnary whose keys are :
-- 'token' containing a list in which it is the raw input text
-- 'label' containing the list of labels
-
-Example: 
-
+Ensure the datasets match the format:
 ```json
 {
-  "token": [
-    "Paris (French pronunciation: \u200b[pa\u0281i] (listen)) is the capital and most populous city of France [...]\nThe Tour de France bicycle race finishes on the Avenue des Champs-\u00c9lys\u00e9es in Paris."
-  ],
-  "label": [
-    "Geography",
-    "Cities",
-    "Europe (Cities)",
-    "Western Europe (Europe (Cities))",
-    "France (Western Europe) (Western Europe (Europe (Cities)))"
-  ]
+  "token": ["Sample input text"],
+  "label": ["Category", "Subcategory", "Further Subcategory"]
 }
 
 ```
 
-In addition a taxonomy file must me added which must match the hwv.taxonomy namely a txt file which have the following properties :
-- each line represent a parent followed by all its children 
-- each line is separted by '\n'
-- in each line each name is separated by '\t'
-- each element must exactly cover all labels represented in the dataset used
+In addition a taxonomy file (such as [hwv.taxonomy](data/HWV/hwv.taxonomy)) is required where each line represents a parent category followed by its children, separated by tabs. Ensure all labels used in the dataset are covered.
 
 Example : 
 
 ```txt
-Root	Technology	Society and social sciences	Arts	Philosophy and religion	Biological and health sciences	Physical sciences	Everyday life	Mathematics (Root)	Geography	History	People
+Root	Science	Technology	Arts
+Science	Physics	Chemistry	Biology
 ```
 
 ### Tokenization 
