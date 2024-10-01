@@ -32,7 +32,8 @@ In addition a taxonomy file must me added which must match the hwv.taxonomy name
 
 For a faster running training you can tokenize your dataset. Here is how you should do with hwv dataset
 
-```python3 tokenize_dataset.py --data_train_path data/HWV/hwv_train.json --data_test_path data/HWV/hwv_test.json --data_valid_path data/HWV/hwv_val.json --config_file data/HWV/config_hwv.json
+```shell
+python3 tokenize_dataset.py --data_train_path data/HWV/hwv_train.json --data_test_path data/HWV/hwv_test.json --data_valid_path data/HWV/hwv_val.json --config_file data/HWV/config_hwv.json
 ```
 
 We provide guidelines for HWV dataset (but you can easily apply it to other datasets with the same code)
