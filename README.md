@@ -27,18 +27,18 @@ $$
 \Huge \hat{\mathbb{P}}(y|x, \pi(y)) = \frac{e^{s_x^{[y]} + \tau\log~\nu(y|\pi(y))}}{\underset{z\in\mathcal{C}(\pi(y))}{\sum}e^{s_x^{[z]} + \tau\log~\nu(z|\pi(z))}} 
 $$
 
-The loss function is computed as follows : 
+The loss function is defined as:
 
 $$
    \Huge l_{\mathrm{CSoft,LA}}(x, Y) = -\sum_{y \in Y}\log\hat{\mathbb{P}}(y|x, \pi(y))
 $$
 
-See the article for full details.
+For full details regarding the derivation and implications of these formulas, please refer to the [article](link).
 
 
 ### A fair methodology of evaluation
 
-We propose to quantitatively evaluate HTC methods based on specifically designed hierarchical metrics and with a rigorous methodology.
+We quantitatively evaluate HTC methods based on specifically designed hierarchical metrics and with a rigorous methodology.
 
 ## Code implementation
 
@@ -108,8 +108,11 @@ You may also use any other bash file contained in the bash_files folder.
 
 ### Evaluation
 
+ckpt/1001_1458_vanilla_bert_hwv_conditional_softmax_la/model.ckpt
 
 
 ## License
 
 This project and datasets is released under the MIT License.
+
+## Citations
