@@ -1,4 +1,4 @@
-# Revisiting Hierarchical Text Classification: Inference and Metrics
+# Revisiting Hierarchical Text Classification: Inference and Metrics 🔍
 
 **Official implementation of [Revisiting Hierarchical Text Classification: Inference and Metrics], CoNLL 2024.**
 
