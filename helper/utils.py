@@ -2,7 +2,7 @@
 
 import codecs
 import torch
-from models.structure_model.tree import Tree
+# from models.structure_model.tree import Tree
 import networkx as nx
 
 

@@ -1,6 +1,6 @@
 # Revisiting Hierarchical Text Classification: Inference and Metrics
 
-This repository is based on Hitin [https://github.com/Rooooyy/HiTIN]
+This repository is based on Hitin[https://github.com/Rooooyy/HiTIN]
 
 
 ## Requirements
@@ -12,7 +12,6 @@ conda create -n revisiting_htc_env --file revisiting-htc.txt
 
 ## Data preparation
 
-test
 
 ### Datasets
 

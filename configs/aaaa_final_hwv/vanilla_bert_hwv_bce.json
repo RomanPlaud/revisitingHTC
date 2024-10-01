@@ -13,7 +13,6 @@
         "type": "bert",
         "bert_model_dir": "bert-base-uncased",
         "max_length": 512,
-        "freeze_bert": false,
         "topK_max_pooling": 1
     },
     "model": {

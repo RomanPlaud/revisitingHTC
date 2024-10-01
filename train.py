@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding:utf-8
 import helper.logger as logger
-from models.model import HiAGM
+from models.model import MODEL
 import torch
 from helper.configure import Configure
 import os
@@ -67,19 +67,19 @@ def train(config, args):
     train_loader, dev_loader, test_loader = data_loaders(config, corpus_vocab, tokenizer=tokenizer, tokenized=tokenized)
 
     # build up model
-    hiagm = HiAGM(config, corpus_vocab, model_type=config.model.type, model_mode='TRAIN')
+    model = MODEL(config, corpus_vocab, model_type=config.model.type, model_mode='TRAIN')
     
-    hiagm.to(config.train.device_setting.device)
+    model.to(config.train.device_setting.device)
 
     # Code for counting parameters
     # from thop import clever_format
-    # print(hiagm)
+    # print(model)
     # def count_parameters(model):
     #     total = sum(p.numel() for p in model.parameters())
     #     trainable = sum(p.numel() for p in model.parameters() if p.requires_grad)
     #     return total, trainable
     #
-    # total_params, trainable_params = count_parameters(hiagm)
+    # total_params, trainable_params = count_parameters(model)
     # total_params, trainable_params = clever_format([total_params, trainable_params], "%.4f")
     # print("Total num of parameters: {}. Trainable parameters: {}".format(total_params, trainable_params))
     # sys.exit()
@@ -97,10 +97,10 @@ def train(config, args):
                      gamma : config.train.loss.focal_parameters.gamma}
         criterion = MATCHLoss(os.path.join(config.data.data_dir, config.data.hierarchy),
                               corpus_vocab.v2i['label'],
-                              recursive_penalty=config.train.loss.recursive_regularization.penalty,
-                              recursive_constraint=config.train.loss.recursive_regularization.flag, 
-                              proba_penalty=config.train.loss.probability_regularization.penalty,
-                              proba_constraint=config.train.loss.probability_regularization.flag,
+                            #   recursive_penalty=config.train.loss.recursive_regularization.penalty,
+                            #   recursive_constraint=config.train.loss.recursive_regularization.flag, 
+                            #   proba_penalty=config.train.loss.probability_regularization.penalty,
+                            #   proba_constraint=config.train.loss.probability_regularization.flag,
                               loss = config.train.loss.classification, 
                               params = params)
     elif config.train.losstype == 'standard':
@@ -114,7 +114,7 @@ def train(config, args):
     elif config.train.losstype == 'conditional_softmax_with_logit_adjustment':
         criterion = ConditionalSoftmaxWithLogitAdjustment(os.path.join(config.data.data_dir, config.data.hierarchy),
                                 corpus_vocab.v2i['label'], corpus_vocab.levels,
-                                corpus_vocab.proba_vector, config.train.loss.logit_adjustment.tau, 
+                                corpus_vocab.proba_vector, config.train.logit_adjustment_tau, 
                                 device=config.train.device_setting.device)
     elif config.train.losstype == 'conditional_sigmoid':
         criterion = ConditionalSigmoid(os.path.join(config.data.data_dir, config.data.hierarchy),
@@ -154,7 +154,7 @@ def train(config, args):
     if config.text_encoder.type == "bert":
         t_total = int(len(train_loader) * (config.train.end_epoch-config.train.start_epoch))
 
-        param = list(hiagm.named_parameters())
+        param = list(model.named_parameters())
         if hasattr(config.train.optimizer, "set_to_zero_decay_bert") and not config.train.optimizer.set_to_zero_decay_bert:
             no_decay = []
         else : 
@@ -181,19 +181,19 @@ def train(config, args):
             print(config.train.optimizer.learning_rates_classifier)
             for i in range(config.model.classifier.num_layer):
                 if i != (config.model.classifier.num_layer-1):
-                    print([n for n, p in param if 'hiagm.list.'+str(i) in n and not any(nd in n for nd in no_decay)])
-                    grouped_parameters.append({'params': [p for n, p in param if 'hiagm.list.'+str(i) in n and not any(nd in n for nd in no_decay)],
+                    print([n for n, p in param if 'model.list.'+str(i) in n and not any(nd in n for nd in no_decay)])
+                    grouped_parameters.append({'params': [p for n, p in param if 'model.list.'+str(i) in n and not any(nd in n for nd in no_decay)],
                                             'weight_decay': args.l2rate, 'lr': args.learning_rate})
                     if no_decay != []:
-                        grouped_parameters.append({'params': [p for n, p in param if 'hiagm.list.'+str(i) in n and any(nd in n for nd in no_decay)],
+                        grouped_parameters.append({'params': [p for n, p in param if 'model.list.'+str(i) in n and any(nd in n for nd in no_decay)],
                                             'weight_decay': 0.0, 'lr': args.learning_rate})
                 else:
                     for j, lr in enumerate(config.train.optimizer.learning_rates_classifier):
-                        print([n for n, p in param if 'hiagm.list.'+str(i)+'.'+str(j) in n and not any(nd in n for nd in no_decay)])
-                        grouped_parameters.append({'params': [p for n, p in param if 'hiagm.list.'+str(i)+'.'+str(j) in n and not any(nd in n for nd in no_decay)],
+                        print([n for n, p in param if 'model.list.'+str(i)+'.'+str(j) in n and not any(nd in n for nd in no_decay)])
+                        grouped_parameters.append({'params': [p for n, p in param if 'model.list.'+str(i)+'.'+str(j) in n and not any(nd in n for nd in no_decay)],
                                                 'weight_decay': args.l2rate, 'lr': lr})
                         if no_decay != []:
-                            grouped_parameters.append({'params': [p for n, p in param if 'hiagm.list.'+str(i)+'.'+str(j) in n and any(nd in n for nd in no_decay)],
+                            grouped_parameters.append({'params': [p for n, p in param if 'model.list.'+str(i)+'.'+str(j) in n and any(nd in n for nd in no_decay)],
                                                     'weight_decay': 0.0, 'lr': lr})
         else:        
             grouped_parameters += [
@@ -209,11 +209,11 @@ def train(config, args):
         scheduler = get_linear_schedule_with_warmup(optimizer, num_warmup_steps=warmup_steps,
                                                     num_training_steps=t_total)
     else:
-        optimizer = set_optimizer(config, hiagm)
+        optimizer = set_optimizer(config, model)
         scheduler = None
     
     # get epoch trainer
-    trainer = Trainer(model=hiagm,
+    trainer = Trainer(model=model,
                       criterion=criterion,
                       optimizer=optimizer,
                       scheduler=scheduler,
@@ -234,7 +234,7 @@ def train(config, args):
     
     model_checkpoint = os.path.join(args.ckpt_dir, args.begin_time + config.train.checkpoint.dir)  # using args
     model_name = config.model.type
-    if config.structure_encoder.type == "TIN":
+    if hasattr(config, 'structure_encoder') and config.structure_encoder.type == "TIN":
         model_name += '_' + str(args.tree_depth) + '_' + str(args.hidden_dim) + '_' + args.tree_pooling_type + '_' + str(args.final_dropout) + '_' + str(args.hierar_penalty)
     wait = 0
     if not os.path.isdir(model_checkpoint):
@@ -255,7 +255,7 @@ def train(config, args):
             logger.info('Loading Previous Checkpoint...')
             logger.info('Loading from {}'.format(os.path.join(model_checkpoint, latest_model_file)))
             best_performance, config = load_checkpoint(model_file=os.path.join(model_checkpoint, latest_model_file),
-                                                       model=hiagm,
+                                                       model=model,
                                                        config=config,
                                                        optimizer=optimizer)
             logger.info('Previous Best Performance---- Micro-F1: {}%, Macro-F1: {}%'.format(
@@ -293,7 +293,7 @@ def train(config, args):
         #     save_checkpoint({
         #         'epoch': epoch,
         #         'model_type': config.model.type,
-        #         'state_dict': hiagm.state_dict(),
+        #         'state_dict': model.state_dict(),
         #         'best_performance': best_performance,
         #         'optimizer': optimizer.state_dict()
         #     }, os.path.join(model_checkpoint, 'best_micro_' + model_name))
@@ -305,7 +305,7 @@ def train(config, args):
         #     save_checkpoint({
         #         'epoch': epoch,
         #         'model_type': config.model.type,
-        #         'state_dict': hiagm.state_dict(),
+        #         'state_dict': model.state_dict(),
         #         'best_performance': best_performance,
         #         'optimizer': optimizer.state_dict()
         #     }, os.path.join(model_checkpoint, 'best_macro_max_depth' + model_name))
@@ -318,7 +318,7 @@ def train(config, args):
             save_checkpoint({
                 'epoch': epoch,
                 'model_type': config.model.type,
-                'state_dict': hiagm.state_dict(),
+                'state_dict': model.state_dict(),
                 'best_loss': best_loss,
                 'optimizer': optimizer.state_dict()
             }, os.path.join(model_checkpoint, 'best_loss_' + model_name))
@@ -337,7 +337,7 @@ def train(config, args):
         #     save_checkpoint({
         #         'epoch': epoch,
         #         'model_type': config.model.type,
-        #         'state_dict': hiagm.state_dict(),
+        #         'state_dict': model.state_dict(),
         #         'best_performance': best_performance,
         #         'optimizer': optimize.state_dict()
         #     }, os.path.join(model_checkpoint, model_name + '_epoch_' + str(epoch)))
@@ -350,7 +350,7 @@ def train(config, args):
     best_epoch_model_file = os.path.join(model_checkpoint, 'best_loss_' + model_name)
 
     if os.path.isfile(best_epoch_model_file):
-        load_checkpoint(best_epoch_model_file, model=hiagm,
+        load_checkpoint(best_epoch_model_file, model=model,
                         config=config,
                         optimizer=optimizer)
         # start_time = time.time()
@@ -373,7 +373,7 @@ def train(config, args):
 
     # best_epoch_model_file = os.path.join(model_checkpoint, 'best_macro_max_depth' + model_name)
     # if os.path.isfile(best_epoch_model_file):
-    #     load_checkpoint(best_epoch_model_file, model=hiagm,
+    #     load_checkpoint(best_epoch_model_file, model=model,
     #                     config=config,
     #                     optimizer=optimizer)
     #     performance = trainer.eval(test_loader, best_epoch[1], 'TEST')

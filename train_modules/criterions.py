@@ -101,9 +101,9 @@ class MATCHLoss(torch.nn.Module):
     def __init__(self,
                  taxonomic_hierarchy,
                  label_map,
-                 recursive_penalty,
+                 recursive_penalty=0.0,
                  proba_penalty=0.0,
-                 recursive_constraint=True, 
+                 recursive_constraint=False, 
                  proba_constraint=False, 
                  loss = 'bce', 
                  params=None):

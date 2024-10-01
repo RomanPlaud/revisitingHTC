@@ -48,11 +48,11 @@ class Logger(object):
         self.logger = logging.getLogger('').handlers = []
 
         self.log_dir = os.path.join(config.log_dir,
-                               config.model.type + '-' + config.structure_encoder.type + '-' + config.text_encoder.type,
+                               config.model.type + '-' + config.text_encoder.type,
                                config.data.dataset + '_' + str(config.train.batch_size) + '_' + str(
                                    config.train.optimizer.learning_rate) + '_' + str(config.train.optimizer.lr_decay) + '_' + str(
                                    config.eval.threshold))
-        if config.structure_encoder.type == "TIN":
+        if hasattr(config, 'structure_encoder') and config.structure_encoder.type == "TIN":
             self.log_file = os.path.join(self.log_dir, config.begin_time + str(config.tree_depth) + '_' + str(config.hidden_dim) + '_' + config.tree_pooling_type + '_' + str(config.final_dropout) + '.log')
         else:
             self.log_file = os.path.join(config.log_dir, config.begin_time + config.log.filename)

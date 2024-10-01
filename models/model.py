@@ -2,11 +2,6 @@
 # coding:utf-8
 
 import torch.nn as nn
-from models.structure_model.structure_encoder import StructureEncoder
-from models.text_encoder import TextEncoder
-from models.embedding_layer import EmbeddingLayer
-from models.multi_label_attention import HiAGMLA
-from models.text_feature_propagation import HiAGMTP
 from models.origin import Classifier
 
 from models.text_encoder import BertTextEncoder
@@ -16,24 +11,19 @@ from transformers import BertForSequenceClassification
 
 
 DATAFLOW_TYPE = {
-    'HiAGM-TP': 'serial',
-    'HiAGM-LA': 'parallel',
     'Origin': 'origin'
 }
 
 
-class HiAGM(nn.Module):
+class MODEL(nn.Module):
     def __init__(self, config, vocab, model_type, model_mode='TRAIN'):
         """
         Hierarchy-Aware Global Model class
         :param config: helper.configure, Configure Object
         :param vocab: data_modules.vocab, Vocab Object
-        :param model_type: Str, ('HiAGM-TP' for the serial variant of text propagation,
-                                 'HiAGM-LA' for the parallel variant of multi-label soft attention,
-                                 'Origin' without hierarchy-aware module)
         :param model_mode: Str, ('TRAIN', 'EVAL'), initialize with the pretrained word embedding if value is 'TRAIN'
         """
-        super(HiAGM, self).__init__()
+        super(MODEL, self).__init__()
         self.config = config
         self.vocab = vocab
         self.device = config.train.device_setting.device
@@ -58,33 +48,19 @@ class HiAGM(nn.Module):
         if self.config.text_encoder.type == "bert":
             self.text_encoder = BertTextEncoder.from_pretrained(self.config.text_encoder.bert_model_dir)
             ## add a condition to freeze bert parameters
-            if self.config.text_encoder.freeze_bert:
+            if hasattr(self.config.text_encoder, 'freeze_bert') and self.config.text_encoder.freeze_bert:
                 for param in self.text_encoder.parameters():
                     param.requires_grad = False
         # else:
             # self.text_encoder = TextEncoder(config)
 
         if self.dataflow_type == 'origin':
-             self.hiagm = Classifier(config=config,
+             self.model = Classifier(config=config,
                                         vocab=vocab,
                                         device=self.device)
         else:
 
-            self.structure_encoder = StructureEncoder(config=config,
-                                                        label_map=vocab.v2i['label'],
-                                                        device=self.device,
-                                                        graph_model_type=config.structure_encoder.type)
-            if self.dataflow_type == 'serial':
-                    self.hiagm = HiAGMTP(config=config,
-                                        device=self.device,
-                                        graph_model=self.structure_encoder,
-                                        label_map=self.label_map)
-            elif self.dataflow_type == 'parallel':
-                    self.hiagm = HiAGMLA(config=config,
-                                        device=self.device,
-                                        graph_model=self.structure_encoder,
-                                        label_map=self.label_map,
-                                        model_mode=model_mode)
+            pass
                 
             
     def optimize_params_dict(self):
@@ -98,7 +74,7 @@ class HiAGM(nn.Module):
         params = list()
         params.append({'params': self.text_encoder.parameters()})
         params.append({'params': self.token_embedding.parameters()})
-        params.append({'params': self.hiagm.parameters()})
+        params.append({'params': self.model.parameters()})
         return params
 
     def forward(self, batch):
@@ -119,7 +95,7 @@ class HiAGM(nn.Module):
         #     token_output = self.text_encoder(embedding, seq_len)
 
         if self.dataflow_type == 'origin':
-            logits, token_output = self.hiagm(token_output)
+            logits, token_output = self.model(token_output)
         else : 
-            logits = self.hiagm(token_output)
+            logits = self.model(token_output)
         return logits, token_output
