@@ -109,7 +109,7 @@ You may also use any other bash file contained in the bash_files folder.
 ### Evaluation
 
 ```shell
-python3 evaluate.py --config_file configs/aaaa_final_hwv/vanilla_bert_hwv_conditional_softmax_la.json  --model_file ckpt/1001_1516_vanilla_bert_hwv_conditional_softmax_la/best_loss_Origin --output_file results_hwv_conditional_softmax_la.json
+python3 evaluate.py --config_file configs/aaaa_final_hwv/vanilla_bert_hwv_conditional_softmax_la.json  --model_file ckpt/1001_1653_vanilla_bert_hwv_conditional_softmax_la/best_micro_Origin --output_file results_hwv_conditional_softmax_la.json
 ```
 
 ## License

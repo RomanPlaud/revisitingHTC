@@ -39,7 +39,7 @@
         },
         "batch_size": 16,
         "start_epoch": 0,
-        "end_epoch": 10,
+        "end_epoch": 20,
         "losstype": "conditional_softmax_with_logit_adjustment",
         "logit_adjustment_tau": 1.0,
         "device_setting": {

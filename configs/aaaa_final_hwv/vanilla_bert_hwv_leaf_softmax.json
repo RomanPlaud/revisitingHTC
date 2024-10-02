@@ -36,7 +36,7 @@
         },
         "batch_size": 16,
         "start_epoch": 0,
-        "end_epoch": 6,
+        "end_epoch": 20,
         "losstype": "leaf_softmax",
         "device_setting": {
             "device": "cuda",
