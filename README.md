@@ -114,9 +114,9 @@ python3 evaluate.py --config_file configs/aaaa_final_hwv/vanilla_bert_hwv_condit
 
 ## License
 
-This project and datasets is released under the MIT License.
+This project and dataset is released under the MIT License.
 
-## Citations
+## Citation
 ```
 @misc{plaud2024revisitinghierarchicaltextclassification,
       title={Revisiting Hierarchical Text Classification: Inference and Metrics}, 
