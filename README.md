@@ -117,7 +117,7 @@ python3 evaluate.py --config_file configs/aaaa_final_hwv/vanilla_bert_hwv_condit
 This project and datasets is released under the MIT License.
 
 ## Citations
-
+```
 @misc{plaud2024revisitinghierarchicaltextclassification,
       title={Revisiting Hierarchical Text Classification: Inference and Metrics}, 
       author={Roman Plaud and Matthieu Labeau and Antoine Saillenfest and Thomas Bonald},
@@ -127,3 +127,4 @@ This project and datasets is released under the MIT License.
       primaryClass={cs.CL},
       url={https://arxiv.org/abs/2410.01305}, 
 }
+```
