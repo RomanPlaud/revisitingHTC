@@ -1,6 +1,6 @@
 # Revisiting Hierarchical Text Classification: Inference and Metrics 🔍
 
-**Official implementation of [Revisiting Hierarchical Text Classification: Inference and Metrics], CoNLL 2024.**
+**Official implementation of [Revisiting Hierarchical Text Classification: Inference and Metrics](https://arxiv.org/abs/2410.01305), CoNLL 2024.**
 
 Based on [HITIN repo](https://github.com/Rooooyy/HiTIN).
 
@@ -33,7 +33,7 @@ $$
    \Huge l_{\mathrm{CSoft,LA}}(x, Y) = -\sum_{y \in Y}\log\hat{\mathbb{P}}(y|x, \pi(y))
 $$
 
-For full details regarding the derivation and implications of these formulas, please refer to the [article](link).
+For full details regarding the derivation and implications of these formulas, please refer to the [article](https://arxiv.org/abs/2410.01305).
 
 
 ### A fair methodology of evaluation
@@ -117,3 +117,13 @@ python3 evaluate.py --config_file configs/aaaa_final_hwv/vanilla_bert_hwv_condit
 This project and datasets is released under the MIT License.
 
 ## Citations
+
+@misc{plaud2024revisitinghierarchicaltextclassification,
+      title={Revisiting Hierarchical Text Classification: Inference and Metrics}, 
+      author={Roman Plaud and Matthieu Labeau and Antoine Saillenfest and Thomas Bonald},
+      year={2024},
+      eprint={2410.01305},
+      archivePrefix={arXiv},
+      primaryClass={cs.CL},
+      url={https://arxiv.org/abs/2410.01305}, 
+}
