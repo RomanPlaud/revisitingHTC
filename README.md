@@ -118,13 +118,22 @@ This project and dataset is released under the MIT License.
 
 ## Citation
 ```
-@misc{plaud2024revisitinghierarchicaltextclassification,
-      title={Revisiting Hierarchical Text Classification: Inference and Metrics}, 
-      author={Roman Plaud and Matthieu Labeau and Antoine Saillenfest and Thomas Bonald},
-      year={2024},
-      eprint={2410.01305},
-      archivePrefix={arXiv},
-      primaryClass={cs.CL},
-      url={https://arxiv.org/abs/2410.01305}, 
+@inproceedings{plaud-etal-2024-revisiting,
+    title = "Revisiting Hierarchical Text Classification: Inference and Metrics",
+    author = "Plaud, Roman  and
+      Labeau, Matthieu  and
+      Saillenfest, Antoine  and
+      Bonald, Thomas",
+    editor = "Barak, Libby  and
+      Alikhani, Malihe",
+    booktitle = "Proceedings of the 28th Conference on Computational Natural Language Learning",
+    month = nov,
+    year = "2024",
+    address = "Miami, FL, USA",
+    publisher = "Association for Computational Linguistics",
+    url = "https://aclanthology.org/2024.conll-1.18",
+    doi = "10.18653/v1/2024.conll-1.18",
+    pages = "231--242",
+    abstract = "Hierarchical text classification (HTC) is the task of assigning labels to a text within a structured space organized as a hierarchy. Recent works treat HTC as a conventional multilabel classification problem, therefore evaluating it as such. We instead propose to evaluate models based on specifically designed hierarchical metrics and we demonstrate the intricacy of metric choice and prediction inference method. We introduce a new challenging dataset and we evaluate fairly, recent sophisticated models, comparing them with a range of simple but strong baselines, including a new theoretically motivated loss. Finally, we show that those baselines are very often competitive with the latest models. This highlights the importance of carefully considering the evaluation methodology when proposing new methods for HTC",
 }
 ```
